@@ -103,7 +103,7 @@ Once running, visit these URLs:
 
 ## 🎬 Part 3: Live Demo - Add New Site
 
-### **The Big Reveal: Add Restaurant Site**
+### **Option A: Pre-built Restaurant Site**
 
 1. **While the app is still running**, open a new terminal
 2. Run the magic command:
@@ -119,33 +119,78 @@ Once running, visit these URLs:
    🌐 New site available at: http://localhost:5000/restaurant
    ```
 
-4. **Visit the new site immediately:**
-   - http://localhost:5000/restaurant
-   - http://localhost:5000/restaurant/menu
-   - http://localhost:5000/restaurant/about
-   - http://localhost:5000/restaurant/reservations
+### **Option B: Custom Restaurant Site (More Impressive!)**
+
+1. **While the app is still running**, create a custom restaurant:
+   ```bash
+   .venv/bin/python add_restaurant.py "Mario's Pizzeria" "Authentic New York style pizza since 1952"
+   ```
+
+2. **Show the dynamic output:**
+   ```
+   🍽️  Adding new restaurant site: Mario's Pizzeria
+      Path: /marios-pizzeria
+      Description: Authentic New York style pizza since 1952
+      (No code changes required!)
+
+   ✅ Restaurant site added successfully!
+   🌐 New site available at: http://localhost:5000/marios-pizzeria
+   ```
+
+3. **Try another one for extra impact:**
+   ```bash
+   .venv/bin/python add_restaurant.py "Sakura Sushi & Ramen" "Traditional Japanese cuisine with fresh sashimi"
+   ```
+
+4. **Visit the new sites immediately:**
+   - http://localhost:5000/marios-pizzeria
+   - http://localhost:5000/sakura-sushi-ramen
+   - Show how each has custom content based on the name/description
 
 5. **Emphasize the key points:**
    - ✅ **NO CODE CHANGES** were made to the main app
    - ✅ **NO RESTART** required
-   - ✅ **INSTANT AVAILABILITY** - site works immediately
-   - ✅ **FULL FUNCTIONALITY** - navigation, content, theming
-   - ✅ **PERFECT FOR AI AGENTS** - they can add sites programmatically
+   - ✅ **INSTANT AVAILABILITY** - sites work immediately
+   - ✅ **CUSTOM CONTENT** - each site uses the provided name/description
+   - ✅ **UNLIMITED SCALABILITY** - add as many sites as you want
+   - ✅ **PERFECT FOR AI AGENTS** - they can create sites programmatically
 
 ### **Show the Database Changes**
 
-Optional: Show that only database records were added:
+Optional: Show all sites now in the database:
 ```bash
-# Show the new site in the database
-.venv/bin/python -c "
-from app import create_app
-from models import Site
-app = create_app()
-with app.app_context():
-    sites = Site.query.all()
-    for site in sites:
-        print(f'- {site.name}: /{site.path_prefix}')
-"
+# Show all sites in the database
+.venv/bin/python show_database_sites.py
+```
+
+**Expected output:**
+```
+🗄️  Database-Driven Sites:
+==================================================
+
+🌐 Acme Corporation
+   Path: /corporate
+   Theme: corporate
+
+🌐 Tech Insights Blog
+   Path: /blog
+   Theme: blog
+
+🌐 Creative Portfolio
+   Path: /portfolio
+   Theme: portfolio
+
+🌐 Mario's Pizzeria
+   Path: /marios-pizzeria
+   Theme: corporate
+
+🌐 Sakura Sushi & Ramen
+   Path: /sakura-sushi-ramen
+   Theme: corporate
+
+==================================================
+✅ Total: 5 sites, all served by ONE Flask route!
+🎯 Key Point: Adding new sites = database changes only
 ```
 
 ---
@@ -173,8 +218,14 @@ with app.app_context():
 # Reset database only
 .venv/bin/python seed_data.py
 
-# Add restaurant site
+# Add pre-built restaurant site
 .venv/bin/python add_new_site.py
+
+# Add custom restaurant site
+.venv/bin/python add_restaurant.py "Restaurant Name" "Description"
+
+# Show all sites in database
+.venv/bin/python show_database_sites.py
 
 # Start app manually
 .venv/bin/python app.py
@@ -189,3 +240,5 @@ with app.app_context():
 - **Database issues**: Run `./reset_demo.sh` to recreate
 - **Port in use**: Change port in `app.py` or kill existing process
 - **Restaurant site exists**: Reset demo first with `./reset_demo.sh`
+- **add_restaurant.py usage**: `python add_restaurant.py "Name" "Description"`
+- **Site path conflicts**: Restaurant names are auto-converted to URL-safe paths
