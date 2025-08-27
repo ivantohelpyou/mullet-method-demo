@@ -1,0 +1,404 @@
+{% extends "base.html" %}
+
+{% block body_class %}corporate-theme{% endblock %}
+
+{% block header_class %}corporate-header{% endblock %}
+
+{% block header %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        <!-- Corporate branding -->
+        <a class="navbar-brand fw-bold" href="/{{ site.path_prefix }}">
+            <i class="fas fa-building me-2"></i>
+            {{ site.name }}
+        </a>
+        
+        <!-- Mobile menu toggle -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#corporateNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <!-- Corporate navigation -->
+        <div class="collapse navbar-collapse" id="corporateNav">
+            <ul class="navbar-nav ms-auto">
+                {% if navigation %}
+                    {% for nav_item in navigation %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/{{ site.path_prefix }}/{{ nav_item.url }}">
+                            {{ nav_item.label }}
+                        </a>
+                    </li>
+                    {% endfor %}
+                {% endif %}
+                
+                <!-- Call-to-action button -->
+                <li class="nav-item ms-3">
+                    <a class="btn btn-outline-light btn-sm" href="/{{ site.path_prefix }}/contact">
+                        <i class="fas fa-phone me-1"></i>
+                        Get Quote
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Corporate hero section (only on home page) -->
+{% if page and page.path == 'home' %}
+<div class="corporate-hero">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="hero-content">
+                    <h1 class="display-4 fw-bold text-white mb-4">{{ page.title }}</h1>
+                    <p class="lead text-white-50 mb-4">{{ page.description }}</p>
+                    <div class="hero-buttons">
+                        <a href="/{{ site.path_prefix }}/services" class="btn btn-light btn-lg me-3">
+                            <i class="fas fa-cogs me-2"></i>Our Services
+                        </a>
+                        <a href="/{{ site.path_prefix }}/contact" class="btn btn-outline-light btn-lg">
+                            <i class="fas fa-envelope me-2"></i>Contact Us
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="hero-image">
+                    <div class="corporate-graphic">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block main_class %}corporate-main{% endblock %}
+
+{% block page_header %}
+{% if page and page.path != 'home' %}
+<div class="corporate-page-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="/{{ site.path_prefix }}">Home</a>
+                        </li>
+                        <li class="breadcrumb-item active">{{ page.title }}</li>
+                    </ol>
+                </nav>
+                <h1 class="page-title">{{ page.title }}</h1>
+                {% if page.description %}
+                <p class="page-description">{{ page.description }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="corporate-content">
+    <div class="container">
+        {% if content_blocks %}
+            {% for block in content_blocks %}
+            <div class="content-section mb-5">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="content-block content-block-{{ block.block_type }}" data-block-id="{{ block.id }}">
+                            {% if block.title and page.path != 'home' %}
+                            <h2 class="content-title">{{ block.title }}</h2>
+                            {% endif %}
+                            <div class="content-body">
+                                {{ block.render() | safe }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% endif %}
+        
+        <!-- Corporate features section (only on home page) -->
+        {% if page and page.path == 'home' %}
+        <div class="corporate-features">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="feature-box">
+                        <div class="feature-icon">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <h4>Industry Leader</h4>
+                        <p>20+ years of proven excellence in delivering innovative business solutions.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="feature-box">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h4>Expert Team</h4>
+                        <p>Dedicated professionals with deep expertise across multiple industries.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="feature-box">
+                        <div class="feature-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h4>24/7 Support</h4>
+                        <p>Round-the-clock customer support to ensure your success.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Call-to-action section -->
+        <div class="corporate-cta">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <div class="cta-box">
+                        <h3>Ready to Transform Your Business?</h3>
+                        <p class="lead">Let our experts help you achieve your goals with innovative solutions.</p>
+                        <a href="/{{ site.path_prefix }}/contact" class="btn btn-primary btn-lg">
+                            <i class="fas fa-rocket me-2"></i>Get Started Today
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block footer_class %}corporate-footer{% endblock %}
+
+{% block footer %}
+<footer class="corporate-footer bg-dark text-white">
+    <div class="container">
+        <div class="row py-5">
+            <div class="col-lg-4 mb-4">
+                <h5>{{ site.name }}</h5>
+                <p>{{ site.description }}</p>
+                <div class="social-links">
+                    <a href="#" class="text-white me-3"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-white me-3"><i class="fab fa-facebook"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-2 mb-4">
+                <h6>Services</h6>
+                <ul class="list-unstyled">
+                    <li><a href="/{{ site.path_prefix }}/services" class="text-white-50">Consulting</a></li>
+                    <li><a href="/{{ site.path_prefix }}/services" class="text-white-50">Technology</a></li>
+                    <li><a href="/{{ site.path_prefix }}/services" class="text-white-50">Support</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-2 mb-4">
+                <h6>Company</h6>
+                <ul class="list-unstyled">
+                    <li><a href="/{{ site.path_prefix }}/about" class="text-white-50">About</a></li>
+                    <li><a href="/{{ site.path_prefix }}/contact" class="text-white-50">Contact</a></li>
+                    <li><a href="#" class="text-white-50">Careers</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-4 mb-4">
+                <h6>Contact Info</h6>
+                <p class="text-white-50 mb-1">
+                    <i class="fas fa-phone me-2"></i>(555) 123-4567
+                </p>
+                <p class="text-white-50 mb-1">
+                    <i class="fas fa-envelope me-2"></i>info@acmecorp.com
+                </p>
+                <p class="text-white-50">
+                    <i class="fas fa-map-marker-alt me-2"></i>123 Business Ave, Corporate City
+                </p>
+            </div>
+        </div>
+        <hr class="border-secondary">
+        <div class="row py-3">
+            <div class="col-md-6">
+                <p class="mb-0">&copy; 2024 {{ site.name }}. All rights reserved.</p>
+            </div>
+            <div class="col-md-6 text-end">
+                <p class="mb-0">
+                    <small>
+                        Powered by <a href="/" class="text-white-50">Mullet Method Architecture</a>
+                    </small>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.corporate-theme {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.corporate-hero {
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    padding: 100px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.corporate-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+    opacity: 0.3;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.corporate-graphic {
+    text-align: center;
+    font-size: 8rem;
+    color: rgba(255, 255, 255, 0.2);
+    position: relative;
+    z-index: 1;
+}
+
+.corporate-page-header {
+    background: #f8f9fa;
+    padding: 40px 0;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.page-title {
+    color: #495057;
+    margin-bottom: 10px;
+}
+
+.page-description {
+    color: #6c757d;
+    font-size: 1.1rem;
+}
+
+.corporate-content {
+    padding: 60px 0;
+}
+
+.content-title {
+    color: #495057;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+}
+
+.feature-box {
+    text-align: center;
+    padding: 30px;
+    border-radius: 10px;
+    background: white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.feature-box:hover {
+    transform: translateY(-5px);
+}
+
+.feature-icon {
+    font-size: 3rem;
+    color: #007bff;
+    margin-bottom: 20px;
+}
+
+.corporate-cta {
+    margin-top: 80px;
+}
+
+.cta-box {
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    color: white;
+    padding: 60px 40px;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.corporate-footer {
+    margin-top: 60px;
+}
+
+.social-links a {
+    font-size: 1.5rem;
+    transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+    color: #007bff !important;
+}
+
+/* Content block styling */
+.content-block-text p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #495057;
+}
+
+.content-block-list ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.content-block-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid #e9ecef;
+    position: relative;
+    padding-left: 30px;
+}
+
+.content-block-list li:before {
+    content: '\f00c';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    color: #28a745;
+    position: absolute;
+    left: 0;
+    top: 10px;
+}
+
+.content-block-quote blockquote {
+    background: #f8f9fa;
+    border-left: 4px solid #007bff;
+    padding: 20px 30px;
+    margin: 20px 0;
+    font-style: italic;
+    font-size: 1.2rem;
+}
+
+.content-block-html .hero {
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    color: white;
+    padding: 60px 40px;
+    border-radius: 15px;
+    text-align: center;
+    margin: 40px 0;
+}
+
+.content-block-html .contact-info,
+.content-block-html .hours {
+    background: #f8f9fa;
+    padding: 30px;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+</style>
+{% endblock %}

@@ -1,0 +1,339 @@
+{% extends "base.html" %}
+
+{% block title %}Mullet Method Demo - Database-Driven Multi-Site Architecture{% endblock %}
+
+{% block description %}Demonstration of the Mullet Method: a single Flask backend serving multiple completely different websites through database-driven routing.{% endblock %}
+
+{% block body_class %}demo-home{% endblock %}
+
+{% block header_class %}demo-header{% endblock %}
+
+{% block main_class %}demo-main{% endblock %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h1 class="display-4 fw-bold">The Mullet Method</h1>
+                <p class="lead">Database-Driven Multi-Site Architecture</p>
+                <p class="fs-5">
+                    One Flask application serving multiple completely different websites 
+                    through dynamic database-driven routing. No hardcoded routes, 
+                    no separate applications—just pure architectural elegance.
+                </p>
+                <div class="demo-buttons">
+                    <a href="/corporate" class="btn btn-primary btn-lg me-3">
+                        <i class="fas fa-building"></i> Corporate Site
+                    </a>
+                    <a href="/blog" class="btn btn-secondary btn-lg me-3">
+                        <i class="fas fa-blog"></i> Tech Blog
+                    </a>
+                    <a href="/portfolio" class="btn btn-success btn-lg">
+                        <i class="fas fa-palette"></i> Portfolio
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="architecture-diagram">
+                    <div class="diagram-box">
+                        <h5>Single Flask App</h5>
+                        <div class="arrow-down"></div>
+                        <h6>Database Lookup</h6>
+                        <div class="arrow-down"></div>
+                        <div class="sites-grid">
+                            <div class="site-box corporate">Corporate</div>
+                            <div class="site-box blog">Blog</div>
+                            <div class="site-box portfolio">Portfolio</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="features-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2>How It Works</h2>
+                <p class="lead">Instead of hardcoded routes, everything is resolved through database lookups</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-route"></i>
+                    </div>
+                    <h4>Dynamic Routing</h4>
+                    <p>URL paths like <code>/corporate/about</code> are resolved through database queries, not hardcoded Flask routes.</p>
+                    <div class="code-example">
+                        <code>site = Site.query.filter_by(path_prefix='corporate')</code>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h4>Theme System</h4>
+                    <p>Each site uses completely different templates and styling, all managed through database configuration.</p>
+                    <div class="code-example">
+                        <code>template = f"themes/{site.theme}/page.html"</code>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h4>Content Management</h4>
+                    <p>All content, navigation, and configuration stored in database. No hardcoded content anywhere.</p>
+                    <div class="code-example">
+                        <code>blocks = ContentBlock.query.filter_by(page_id=page.id)</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="demo-sites-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2>Demo Sites</h2>
+                <p class="lead">Three completely different websites served by the same Flask application</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            {% if sites %}
+                {% for site in sites %}
+                <div class="col-lg-4 mb-4">
+                    <div class="site-preview-card theme-{{ site.template_theme }}">
+                        <div class="site-preview-header">
+                            <h4>{{ site.name }}</h4>
+                            <span class="theme-badge">{{ site.template_theme | title }} Theme</span>
+                        </div>
+                        <div class="site-preview-body">
+                            <p>{{ site.description }}</p>
+                            <div class="site-features">
+                                {% if site.config and site.config.features %}
+                                    {% for feature in site.config.features %}
+                                    <span class="feature-tag">{{ feature | replace('_', ' ') | title }}</span>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="site-preview-footer">
+                            <a href="/{{ site.path_prefix }}" class="btn btn-outline-primary">
+                                Visit {{ site.name }}
+                                <i class="fas fa-external-link-alt ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12 text-center">
+                    <div class="alert alert-warning">
+                        <h5>No demo sites found</h5>
+                        <p>Run <code>python seed_data.py</code> to create sample data.</p>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="architecture-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2>Architecture Benefits</h2>
+                <p class="lead">Why choose database-driven routing over traditional hardcoded routes?</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="benefit-card">
+                    <h5><i class="fas fa-rocket text-primary"></i> Scalability</h5>
+                    <p>Add new sites without code changes. Just insert database records and create templates.</p>
+                </div>
+            </div>
+            
+            <div class="col-md-6 mb-4">
+                <div class="benefit-card">
+                    <h5><i class="fas fa-cogs text-success"></i> Flexibility</h5>
+                    <p>Change site structure, navigation, and content through database updates, not code deployments.</p>
+                </div>
+            </div>
+            
+            <div class="col-md-6 mb-4">
+                <div class="benefit-card">
+                    <h5><i class="fas fa-users text-info"></i> Multi-Tenancy</h5>
+                    <p>Serve multiple clients or brands from a single application with complete customization.</p>
+                </div>
+            </div>
+            
+            <div class="col-md-6 mb-4">
+                <div class="benefit-card">
+                    <h5><i class="fas fa-robot text-warning"></i> AI-Friendly</h5>
+                    <p>Perfect for AI agents to extend and customize without touching core application code.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="cta-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2>Ready to Explore?</h2>
+                <p class="lead">Experience the power of database-driven architecture</p>
+                <div class="cta-buttons">
+                    <a href="/corporate" class="btn btn-primary btn-lg me-3">
+                        <i class="fas fa-building"></i> Corporate Demo
+                    </a>
+                    <a href="/blog" class="btn btn-secondary btn-lg me-3">
+                        <i class="fas fa-blog"></i> Blog Demo
+                    </a>
+                    <a href="/portfolio" class="btn btn-success btn-lg">
+                        <i class="fas fa-palette"></i> Portfolio Demo
+                    </a>
+                </div>
+                <p class="mt-4">
+                    <small class="text-muted">
+                        <i class="fas fa-info-circle"></i>
+                        Each site demonstrates different themes, content types, and navigation structures
+                    </small>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.demo-home {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.hero-section {
+    padding: 80px 0;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.architecture-diagram {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+}
+
+.diagram-box h5, .diagram-box h6 {
+    color: white;
+    margin-bottom: 15px;
+}
+
+.arrow-down {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 15px solid white;
+    margin: 10px auto;
+}
+
+.sites-grid {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 15px;
+}
+
+.site-box {
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.site-box.corporate { background: #007bff; }
+.site-box.blog { background: #6f42c1; }
+.site-box.portfolio { background: #e83e8c; }
+
+.features-section, .demo-sites-section, .architecture-section {
+    padding: 60px 0;
+    background: white;
+    color: #333;
+}
+
+.feature-card, .site-preview-card, .benefit-card {
+    background: white;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    height: 100%;
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover, .site-preview-card:hover {
+    transform: translateY(-5px);
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+    color: #667eea;
+    margin-bottom: 20px;
+}
+
+.code-example {
+    background: #f8f9fa;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 15px;
+}
+
+.theme-badge {
+    background: #e9ecef;
+    color: #495057;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+}
+
+.feature-tag {
+    background: #e3f2fd;
+    color: #1976d2;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    display: inline-block;
+}
+
+.cta-section {
+    padding: 60px 0;
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+    color: white;
+}
+
+.demo-buttons .btn, .cta-buttons .btn {
+    margin-bottom: 10px;
+}
+</style>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends "themes/portfolio/layout.html" %}
+
+{# Portfolio theme page template - inherits from portfolio layout #}
+
+{% block title %}{{ page.title }} - {{ site.name }}{% endblock %}
+
+{% block description %}{{ page.description or site.description }}{% endblock %}
+
+{# Page content is handled by the layout template #}

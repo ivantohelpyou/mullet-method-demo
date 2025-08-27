@@ -1,0 +1,338 @@
+/* Base CSS for Mullet Method Demo */
+
+/* Global styles */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Accessibility */
+.visually-hidden-focusable:not(:focus):not(:focus-within) {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+/* Layout */
+.main-content {
+    min-height: calc(100vh - 200px);
+}
+
+/* Navigation */
+.navbar-brand {
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+.navbar-nav .nav-link {
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+/* Page headers */
+.page-header {
+    padding: 40px 0;
+    border-bottom: 1px solid #e9ecef;
+    margin-bottom: 40px;
+}
+
+.page-header h1 {
+    color: #495057;
+    margin-bottom: 15px;
+}
+
+.page-header .lead {
+    color: #6c757d;
+    font-size: 1.2rem;
+}
+
+/* Content blocks */
+.content-block {
+    margin-bottom: 40px;
+}
+
+.content-block-title {
+    color: #495057;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    font-weight: 400;
+}
+
+.content-block-content {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #495057;
+}
+
+/* Content block types */
+.content-block-text p {
+    margin-bottom: 20px;
+}
+
+.content-block-html {
+    /* Allow HTML content to style itself */
+}
+
+.content-block-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.content-block-list ul {
+    padding-left: 0;
+    list-style: none;
+}
+
+.content-block-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid #e9ecef;
+    position: relative;
+    padding-left: 30px;
+}
+
+.content-block-list li:before {
+    content: '✓';
+    color: #28a745;
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+    top: 10px;
+}
+
+.content-block-list li:last-child {
+    border-bottom: none;
+}
+
+.content-block-quote blockquote {
+    background: #f8f9fa;
+    border-left: 4px solid #007bff;
+    padding: 20px 30px;
+    margin: 20px 0;
+    font-style: italic;
+    font-size: 1.1rem;
+}
+
+.content-block-code pre {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 20px;
+    overflow-x: auto;
+}
+
+.content-block-code code {
+    color: #e83e8c;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+}
+
+/* Flash messages */
+.flash-messages {
+    margin-bottom: 30px;
+}
+
+/* Buttons */
+.btn {
+    font-weight: 500;
+    border-radius: 8px;
+    padding: 12px 24px;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.btn-lg {
+    padding: 16px 32px;
+    font-size: 1.1rem;
+}
+
+.btn-sm {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+}
+
+/* Cards */
+.card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+/* Forms */
+.form-control {
+    border-radius: 8px;
+    border: 2px solid #e9ecef;
+    padding: 12px 16px;
+    transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
+}
+
+/* Breadcrumbs */
+.breadcrumb {
+    background: transparent;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.breadcrumb-item a {
+    color: #6c757d;
+    text-decoration: none;
+}
+
+.breadcrumb-item a:hover {
+    color: #007bff;
+}
+
+.breadcrumb-item.active {
+    color: #495057;
+}
+
+/* Footer */
+.site-footer {
+    background: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+    padding: 40px 0 20px;
+    margin-top: 60px;
+}
+
+.site-footer a {
+    color: #6c757d;
+    text-decoration: none;
+}
+
+.site-footer a:hover {
+    color: #007bff;
+}
+
+/* Responsive utilities */
+@media (max-width: 768px) {
+    .page-header {
+        padding: 20px 0;
+        text-align: center;
+    }
+    
+    .page-header h1 {
+        font-size: 2rem;
+    }
+    
+    .content-block {
+        margin-bottom: 30px;
+    }
+    
+    .btn-lg {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+/* Animation utilities */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease;
+}
+
+.slide-in-up {
+    animation: slideInUp 0.6s ease;
+}
+
+/* Loading states */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid #007bff;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Print styles */
+@media print {
+    .navbar,
+    .site-footer,
+    .btn,
+    .flash-messages {
+        display: none !important;
+    }
+    
+    .main-content {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    .page-header {
+        border-bottom: 2px solid #000;
+        margin-bottom: 20px;
+    }
+    
+    .content-block {
+        break-inside: avoid;
+        margin-bottom: 20px;
+    }
+    
+    a[href]:after {
+        content: " (" attr(href) ")";
+        font-size: 0.8em;
+        color: #666;
+    }
+}
+
+/* Dark mode support (if needed) */
+@media (prefers-color-scheme: dark) {
+    /* Add dark mode styles here if desired */
+}

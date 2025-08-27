@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block title %}Server Error - Mullet Method Demo{% endblock %}
+
+{% block body_class %}error-page error-500{% endblock %}
+
+{% block main %}
+<div class="error-container">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 text-center">
+                <div class="error-content">
+                    <div class="error-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h1 class="error-code">500</h1>
+                    <h2 class="error-title">Server Error</h2>
+                    <p class="error-message">
+                        Something went wrong with our database-driven routing system.
+                        Our development team has been notified and is working on a fix.
+                    </p>
+                    
+                    <div class="error-actions">
+                        <a href="/" class="btn btn-primary btn-lg me-3">
+                            <i class="fas fa-home me-2"></i>Go Home
+                        </a>
+                        <a href="javascript:location.reload()" class="btn btn-outline-secondary btn-lg">
+                            <i class="fas fa-redo me-2"></i>Try Again
+                        </a>
+                    </div>
+                    
+                    <div class="demo-links">
+                        <h5>Try these demo sites:</h5>
+                        <div class="demo-buttons">
+                            <a href="/corporate" class="btn btn-outline-primary me-2">
+                                <i class="fas fa-building me-1"></i>Corporate
+                            </a>
+                            <a href="/blog" class="btn btn-outline-secondary me-2">
+                                <i class="fas fa-blog me-1"></i>Blog
+                            </a>
+                            <a href="/portfolio" class="btn btn-outline-success">
+                                <i class="fas fa-palette me-1"></i>Portfolio
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.error-500 {
+    background: linear-gradient(135deg, #dc3545 0%, #6f42c1 100%);
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.error-container {
+    width: 100%;
+    padding: 60px 0;
+}
+
+.error-content {
+    text-align: center;
+}
+
+.error-icon {
+    font-size: 4rem;
+    margin-bottom: 30px;
+    opacity: 0.8;
+}
+
+.error-code {
+    font-size: 6rem;
+    font-weight: 300;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.error-title {
+    font-size: 2.5rem;
+    font-weight: 300;
+    margin-bottom: 20px;
+}
+
+.error-message {
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+    opacity: 0.9;
+    line-height: 1.6;
+}
+
+.error-actions {
+    margin-bottom: 50px;
+}
+
+.demo-links {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
+
+.demo-links h5 {
+    margin-bottom: 20px;
+    font-weight: 300;
+}
+
+.demo-buttons .btn {
+    margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+    .error-code {
+        font-size: 4rem;
+    }
+    
+    .error-title {
+        font-size: 2rem;
+    }
+    
+    .error-actions .btn {
+        display: block;
+        margin: 10px 0;
+    }
+}
+</style>
+{% endblock %}

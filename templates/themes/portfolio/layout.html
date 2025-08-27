@@ -1,0 +1,718 @@
+{% extends "base.html" %}
+
+{% block body_class %}portfolio-theme{% endblock %}
+
+{% block header_class %}portfolio-header{% endblock %}
+
+{% block header %}
+<nav class="navbar navbar-expand-lg navbar-dark portfolio-nav">
+    <div class="container">
+        <!-- Portfolio branding -->
+        <a class="navbar-brand" href="/{{ site.path_prefix }}">
+            <i class="fas fa-palette me-2"></i>
+            {{ site.name }}
+        </a>
+        
+        <!-- Mobile menu toggle -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#portfolioNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <!-- Portfolio navigation -->
+        <div class="collapse navbar-collapse" id="portfolioNav">
+            <ul class="navbar-nav ms-auto">
+                {% if navigation %}
+                    {% for nav_item in navigation %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/{{ site.path_prefix }}/{{ nav_item.url }}">
+                            {{ nav_item.label }}
+                        </a>
+                    </li>
+                    {% endfor %}
+                {% endif %}
+                
+                <!-- Contact CTA -->
+                <li class="nav-item ms-3">
+                    <a class="btn btn-outline-light btn-sm" href="/{{ site.path_prefix }}/contact">
+                        <i class="fas fa-envelope me-1"></i>
+                        Hire Me
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Portfolio hero section (only on home page) -->
+{% if page and page.path == 'home' %}
+<div class="portfolio-hero">
+    <div class="hero-background"></div>
+    <div class="container">
+        <div class="row align-items-center min-vh-100">
+            <div class="col-lg-6">
+                <div class="hero-content">
+                    <h1 class="hero-title">{{ page.title }}</h1>
+                    <p class="hero-subtitle">{{ page.description }}</p>
+                    <div class="hero-buttons">
+                        <a href="/{{ site.path_prefix }}/projects" class="btn btn-primary btn-lg me-3">
+                            <i class="fas fa-eye me-2"></i>View Work
+                        </a>
+                        <a href="/{{ site.path_prefix }}/contact" class="btn btn-outline-light btn-lg">
+                            <i class="fas fa-handshake me-2"></i>Let's Talk
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="hero-visual">
+                    <div class="creative-element">
+                        <div class="floating-shapes">
+                            <div class="shape shape-1"></div>
+                            <div class="shape shape-2"></div>
+                            <div class="shape shape-3"></div>
+                            <div class="shape shape-4"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="scroll-indicator">
+        <i class="fas fa-chevron-down"></i>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block main_class %}portfolio-main{% endblock %}
+
+{% block page_header %}
+{% if page and page.path != 'home' %}
+<div class="portfolio-page-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item">
+                            <a href="/{{ site.path_prefix }}">Home</a>
+                        </li>
+                        <li class="breadcrumb-item active">{{ page.title }}</li>
+                    </ol>
+                </nav>
+                <h1 class="page-title">{{ page.title }}</h1>
+                {% if page.description %}
+                <p class="page-description">{{ page.description }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="portfolio-content">
+    <div class="container">
+        {% if content_blocks %}
+            {% for block in content_blocks %}
+            <div class="content-section mb-5">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        <div class="content-block content-block-{{ block.block_type }}" data-block-id="{{ block.id }}">
+                            {% if block.title and page.path != 'home' %}
+                            <h2 class="content-title">{{ block.title }}</h2>
+                            {% endif %}
+                            <div class="content-body">
+                                {{ block.render() | safe }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% endif %}
+        
+        <!-- Portfolio showcase (only on projects page) -->
+        {% if page and page.path == 'projects' %}
+        <div class="portfolio-showcase">
+            <div class="row">
+                <div class="col-12 text-center mb-5">
+                    <h2>Featured Work</h2>
+                    <p class="lead">A selection of recent projects showcasing design and development skills</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="portfolio-item">
+                        <div class="portfolio-image">
+                            <div class="placeholder-image">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                            <div class="portfolio-overlay">
+                                <a href="#" class="btn btn-light">View Project</a>
+                            </div>
+                        </div>
+                        <div class="portfolio-info">
+                            <h4>E-commerce Platform</h4>
+                            <p>Modern online shopping experience with React and Node.js</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="portfolio-item">
+                        <div class="portfolio-image">
+                            <div class="placeholder-image">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <div class="portfolio-overlay">
+                                <a href="#" class="btn btn-light">View Project</a>
+                            </div>
+                        </div>
+                        <div class="portfolio-info">
+                            <h4>AI Content System</h4>
+                            <p>Intelligent content management with AI integration</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        
+        <!-- Skills section (only on resume page) -->
+        {% if page and page.path == 'resume' %}
+        <div class="skills-section">
+            <div class="row">
+                <div class="col-12 text-center mb-5">
+                    <h2>Skills & Expertise</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="skill-category">
+                        <h5>Frontend Development</h5>
+                        <div class="skill-bars">
+                            <div class="skill-bar">
+                                <span class="skill-name">React</span>
+                                <div class="skill-progress">
+                                    <div class="skill-fill" style="width: 90%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-bar">
+                                <span class="skill-name">Vue.js</span>
+                                <div class="skill-progress">
+                                    <div class="skill-fill" style="width: 85%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-bar">
+                                <span class="skill-name">CSS/SCSS</span>
+                                <div class="skill-progress">
+                                    <div class="skill-fill" style="width: 95%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="skill-category">
+                        <h5>Backend Development</h5>
+                        <div class="skill-bars">
+                            <div class="skill-bar">
+                                <span class="skill-name">Python</span>
+                                <div class="skill-progress">
+                                    <div class="skill-fill" style="width: 92%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-bar">
+                                <span class="skill-name">Node.js</span>
+                                <div class="skill-progress">
+                                    <div class="skill-fill" style="width: 88%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-bar">
+                                <span class="skill-name">PostgreSQL</span>
+                                <div class="skill-progress">
+                                    <div class="skill-fill" style="width: 85%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        
+        <!-- Contact CTA (on all pages except contact) -->
+        {% if page and page.path != 'contact' %}
+        <div class="portfolio-cta">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <div class="cta-box">
+                        <h3>Let's Create Something Amazing</h3>
+                        <p class="lead">Ready to bring your ideas to life? Let's discuss your next project.</p>
+                        <a href="/{{ site.path_prefix }}/contact" class="btn btn-primary btn-lg">
+                            <i class="fas fa-rocket me-2"></i>Start a Project
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block footer_class %}portfolio-footer{% endblock %}
+
+{% block footer %}
+<footer class="portfolio-footer">
+    <div class="container">
+        <div class="row py-5">
+            <div class="col-lg-6 mb-4">
+                <h5>{{ site.name }}</h5>
+                <p>{{ site.description }}</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-dribbble"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-behance"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-3 mb-4">
+                <h6>Quick Links</h6>
+                <ul class="footer-links">
+                    <li><a href="/{{ site.path_prefix }}/projects">Projects</a></li>
+                    <li><a href="/{{ site.path_prefix }}/resume">Resume</a></li>
+                    <li><a href="/{{ site.path_prefix }}/contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-3 mb-4">
+                <h6>Services</h6>
+                <ul class="footer-links">
+                    <li><a href="#">Web Design</a></li>
+                    <li><a href="#">Development</a></li>
+                    <li><a href="#">Consulting</a></li>
+                </ul>
+            </div>
+        </div>
+        <hr class="footer-divider">
+        <div class="row py-3">
+            <div class="col-md-6">
+                <p class="mb-0">&copy; 2024 {{ site.name }}. All rights reserved.</p>
+            </div>
+            <div class="col-md-6 text-end">
+                <p class="mb-0">
+                    <small>
+                        Powered by <a href="/" class="footer-link">Mullet Method Architecture</a>
+                    </small>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.portfolio-theme {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background: #f8f9fa;
+}
+
+.portfolio-nav {
+    background: rgba(232, 62, 140, 0.95) !important;
+    backdrop-filter: blur(10px);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.portfolio-hero {
+    background: linear-gradient(135deg, #e83e8c 0%, #343a40 100%);
+    color: white;
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+    opacity: 0.5;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 300;
+    margin-bottom: 20px;
+    animation: fadeInUp 1s ease;
+}
+
+.hero-subtitle {
+    font-size: 1.3rem;
+    opacity: 0.9;
+    margin-bottom: 40px;
+    animation: fadeInUp 1s ease 0.2s both;
+}
+
+.hero-buttons {
+    animation: fadeInUp 1s ease 0.4s both;
+}
+
+.floating-shapes {
+    position: relative;
+    height: 400px;
+}
+
+.shape {
+    position: absolute;
+    border-radius: 50%;
+    animation: float 6s ease-in-out infinite;
+}
+
+.shape-1 {
+    width: 80px;
+    height: 80px;
+    background: rgba(32, 201, 151, 0.7);
+    top: 20%;
+    left: 20%;
+    animation-delay: 0s;
+}
+
+.shape-2 {
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 193, 7, 0.7);
+    top: 60%;
+    left: 60%;
+    animation-delay: 2s;
+}
+
+.shape-3 {
+    width: 100px;
+    height: 100px;
+    background: rgba(220, 53, 69, 0.7);
+    top: 40%;
+    left: 70%;
+    animation-delay: 4s;
+}
+
+.shape-4 {
+    width: 40px;
+    height: 40px;
+    background: rgba(0, 123, 255, 0.7);
+    top: 70%;
+    left: 30%;
+    animation-delay: 1s;
+}
+
+.scroll-indicator {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.5rem;
+    animation: bounce 2s infinite;
+}
+
+.portfolio-page-header {
+    background: linear-gradient(135deg, #e83e8c 0%, #343a40 100%);
+    color: white;
+    padding: 120px 0 60px;
+    margin-top: 70px;
+}
+
+.page-title {
+    font-size: 2.5rem;
+    font-weight: 300;
+    margin-bottom: 15px;
+}
+
+.page-description {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+.portfolio-content {
+    padding: 60px 0;
+}
+
+.content-title {
+    color: #495057;
+    font-size: 2rem;
+    font-weight: 300;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.portfolio-item {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.portfolio-item:hover {
+    transform: translateY(-10px);
+}
+
+.portfolio-image {
+    position: relative;
+    height: 250px;
+    overflow: hidden;
+}
+
+.placeholder-image {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #e83e8c 0%, #343a40 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    color: white;
+}
+
+.portfolio-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(232, 62, 140, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.portfolio-item:hover .portfolio-overlay {
+    opacity: 1;
+}
+
+.portfolio-info {
+    padding: 30px;
+}
+
+.portfolio-info h4 {
+    color: #495057;
+    margin-bottom: 10px;
+}
+
+.skill-category {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.skill-bar {
+    margin-bottom: 20px;
+}
+
+.skill-name {
+    display: block;
+    margin-bottom: 5px;
+    color: #495057;
+    font-weight: 500;
+}
+
+.skill-progress {
+    height: 8px;
+    background: #e9ecef;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.skill-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #e83e8c 0%, #20c997 100%);
+    border-radius: 4px;
+    transition: width 1s ease;
+}
+
+.portfolio-cta {
+    margin-top: 80px;
+}
+
+.cta-box {
+    background: linear-gradient(135deg, #e83e8c 0%, #343a40 100%);
+    color: white;
+    padding: 60px 40px;
+    border-radius: 20px;
+    text-align: center;
+}
+
+.portfolio-footer {
+    background: #343a40;
+    color: white;
+    margin-top: 60px;
+}
+
+.social-links {
+    margin-top: 20px;
+}
+
+.social-link {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    transition: all 0.3s ease;
+}
+
+.social-link:hover {
+    background: #e83e8c;
+    color: white;
+    transform: translateY(-3px);
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links li {
+    margin-bottom: 10px;
+}
+
+.footer-links a, .footer-link {
+    color: #adb5bd;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover, .footer-link:hover {
+    color: #e83e8c;
+}
+
+.footer-divider {
+    border-color: #495057;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateX(-50%) translateY(0);
+    }
+    40% {
+        transform: translateX(-50%) translateY(-10px);
+    }
+    60% {
+        transform: translateX(-50%) translateY(-5px);
+    }
+}
+
+/* Content block styling for portfolio */
+.content-block-text p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #495057;
+    text-align: center;
+}
+
+.content-block-list ul {
+    list-style: none;
+    padding-left: 0;
+    text-align: center;
+}
+
+.content-block-list li {
+    padding: 8px 0;
+    color: #495057;
+}
+
+.content-block-html .portfolio-hero {
+    background: linear-gradient(135deg, #e83e8c 0%, #343a40 100%);
+    color: white;
+    padding: 80px 40px;
+    border-radius: 20px;
+    text-align: center;
+    margin: 40px 0;
+}
+
+.content-block-html .project {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    margin: 30px 0;
+    text-align: center;
+}
+
+.content-block-html .project h3 {
+    color: #495057;
+    margin-bottom: 15px;
+}
+
+.content-block-html .tech-stack {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .floating-shapes {
+        height: 200px;
+    }
+    
+    .shape {
+        width: 40px !important;
+        height: 40px !important;
+    }
+    
+    .portfolio-content {
+        padding: 40px 0;
+    }
+}
+</style>
+{% endblock %}

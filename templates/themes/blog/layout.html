@@ -1,0 +1,546 @@
+{% extends "base.html" %}
+
+{% block body_class %}blog-theme{% endblock %}
+
+{% block header_class %}blog-header{% endblock %}
+
+{% block header %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-purple">
+    <div class="container">
+        <!-- Blog branding -->
+        <a class="navbar-brand" href="/{{ site.path_prefix }}">
+            <i class="fas fa-blog me-2"></i>
+            {{ site.name }}
+        </a>
+        
+        <!-- Mobile menu toggle -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#blogNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <!-- Blog navigation -->
+        <div class="collapse navbar-collapse" id="blogNav">
+            <ul class="navbar-nav ms-auto">
+                {% if navigation %}
+                    {% for nav_item in navigation %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/{{ site.path_prefix }}/{{ nav_item.url }}">
+                            {{ nav_item.label }}
+                        </a>
+                    </li>
+                    {% endfor %}
+                {% endif %}
+                
+                <!-- Search icon -->
+                <li class="nav-item ms-3">
+                    <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#searchModal">
+                        <i class="fas fa-search"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Blog header banner -->
+<div class="blog-banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 class="blog-title">{{ site.name }}</h1>
+                <p class="blog-tagline">{{ site.description }}</p>
+                <div class="blog-meta">
+                    <span class="badge bg-light text-dark me-2">
+                        <i class="fas fa-calendar me-1"></i>Updated Daily
+                    </span>
+                    <span class="badge bg-light text-dark">
+                        <i class="fas fa-tags me-1"></i>Tech • AI • Development
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block main_class %}blog-main{% endblock %}
+
+{% block main %}
+<div class="blog-content">
+    <div class="container">
+        <div class="row">
+            <!-- Main content area -->
+            <div class="col-lg-8">
+                {% block page_header %}
+                {% if page and page.path != 'home' %}
+                <div class="blog-page-header">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="/{{ site.path_prefix }}">Home</a>
+                            </li>
+                            <li class="breadcrumb-item active">{{ page.title }}</li>
+                        </ol>
+                    </nav>
+                    
+                    <article class="blog-post-header">
+                        <h1 class="post-title">{{ page.title }}</h1>
+                        {% if page.description %}
+                        <p class="post-excerpt">{{ page.description }}</p>
+                        {% endif %}
+                        <div class="post-meta">
+                            <span class="meta-item">
+                                <i class="fas fa-calendar me-1"></i>
+                                {{ page.created_at.strftime('%B %d, %Y') if page.created_at else 'March 15, 2024' }}
+                            </span>
+                            <span class="meta-item">
+                                <i class="fas fa-user me-1"></i>
+                                Tech Blogger
+                            </span>
+                            <span class="meta-item">
+                                <i class="fas fa-clock me-1"></i>
+                                5 min read
+                            </span>
+                        </div>
+                    </article>
+                </div>
+                {% endif %}
+                {% endblock %}
+                
+                {% block content %}
+                <div class="blog-post-content">
+                    {% if content_blocks %}
+                        {% for block in content_blocks %}
+                        <div class="content-block content-block-{{ block.block_type }}" data-block-id="{{ block.id }}">
+                            {% if block.title and page.path != 'home' %}
+                            <h2 class="content-title">{{ block.title }}</h2>
+                            {% endif %}
+                            <div class="content-body">
+                                {{ block.render() | safe }}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+                    
+                    <!-- Blog post footer (for individual posts) -->
+                    {% if page and page.path != 'home' and page.content_type == 'blog_post' %}
+                    <div class="blog-post-footer">
+                        <div class="post-tags">
+                            <h6>Tags:</h6>
+                            <span class="badge bg-secondary me-1">Web Development</span>
+                            <span class="badge bg-secondary me-1">Flask</span>
+                            <span class="badge bg-secondary me-1">Database Design</span>
+                            <span class="badge bg-secondary me-1">Architecture</span>
+                        </div>
+                        
+                        <div class="post-share">
+                            <h6>Share this post:</h6>
+                            <a href="#" class="btn btn-outline-primary btn-sm me-2">
+                                <i class="fab fa-twitter"></i> Twitter
+                            </a>
+                            <a href="#" class="btn btn-outline-primary btn-sm me-2">
+                                <i class="fab fa-linkedin"></i> LinkedIn
+                            </a>
+                            <a href="#" class="btn btn-outline-primary btn-sm">
+                                <i class="fas fa-link"></i> Copy Link
+                            </a>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endblock %}
+            </div>
+            
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                {% block sidebar %}
+                <div class="blog-sidebar">
+                    <!-- About widget -->
+                    <div class="sidebar-widget">
+                        <h5 class="widget-title">About the Author</h5>
+                        <div class="author-bio">
+                            <div class="author-avatar">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <p>Passionate software developer sharing insights about web development, AI, and technology trends. 10+ years of experience building scalable applications.</p>
+                            <div class="author-social">
+                                <a href="#" class="text-muted me-2"><i class="fab fa-github"></i></a>
+                                <a href="#" class="text-muted me-2"><i class="fab fa-twitter"></i></a>
+                                <a href="#" class="text-muted me-2"><i class="fab fa-linkedin"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Recent posts widget -->
+                    <div class="sidebar-widget">
+                        <h5 class="widget-title">Recent Posts</h5>
+                        <div class="recent-posts">
+                            <div class="recent-post">
+                                <h6><a href="#">Database-Driven Architecture: The Mullet Method</a></h6>
+                                <small class="text-muted">March 15, 2024</small>
+                            </div>
+                            <div class="recent-post">
+                                <h6><a href="#">Building Scalable Flask Applications</a></h6>
+                                <small class="text-muted">March 10, 2024</small>
+                            </div>
+                            <div class="recent-post">
+                                <h6><a href="#">AI-Powered Content Management</a></h6>
+                                <small class="text-muted">March 5, 2024</small>
+                            </div>
+                            <div class="recent-post">
+                                <h6><a href="#">The Future of Web Development</a></h6>
+                                <small class="text-muted">February 28, 2024</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Categories widget -->
+                    <div class="sidebar-widget">
+                        <h5 class="widget-title">Categories</h5>
+                        <div class="categories">
+                            <a href="#" class="category-link">
+                                Web Development <span class="post-count">(12)</span>
+                            </a>
+                            <a href="#" class="category-link">
+                                Database Design <span class="post-count">(8)</span>
+                            </a>
+                            <a href="#" class="category-link">
+                                AI & Machine Learning <span class="post-count">(6)</span>
+                            </a>
+                            <a href="#" class="category-link">
+                                System Architecture <span class="post-count">(5)</span>
+                            </a>
+                            <a href="#" class="category-link">
+                                Open Source <span class="post-count">(4)</span>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Newsletter widget -->
+                    <div class="sidebar-widget">
+                        <h5 class="widget-title">Newsletter</h5>
+                        <p>Get the latest posts delivered right to your inbox.</p>
+                        <form class="newsletter-form">
+                            <div class="mb-3">
+                                <input type="email" class="form-control" placeholder="Your email address">
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="fas fa-envelope me-1"></i>Subscribe
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Search Modal -->
+<div class="modal fade" id="searchModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Search Blog</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <input type="search" class="form-control" placeholder="Search posts...">
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-search me-1"></i>Search
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer_class %}blog-footer{% endblock %}
+
+{% block footer %}
+<footer class="blog-footer">
+    <div class="container">
+        <div class="row py-4">
+            <div class="col-md-6">
+                <p>&copy; 2024 {{ site.name }}. All rights reserved.</p>
+            </div>
+            <div class="col-md-6 text-end">
+                <p>
+                    <small>
+                        Powered by <a href="/" class="text-muted">Mullet Method Architecture</a>
+                    </small>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.blog-theme {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    background-color: #f8f9fa;
+}
+
+.bg-purple {
+    background-color: #6f42c1 !important;
+}
+
+.blog-banner {
+    background: linear-gradient(135deg, #6f42c1 0%, #495057 100%);
+    color: white;
+    padding: 60px 0;
+    text-align: center;
+}
+
+.blog-title {
+    font-size: 2.5rem;
+    font-weight: 300;
+    margin-bottom: 15px;
+}
+
+.blog-tagline {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    margin-bottom: 20px;
+}
+
+.blog-content {
+    padding: 60px 0;
+}
+
+.blog-page-header {
+    margin-bottom: 40px;
+}
+
+.post-title {
+    color: #495057;
+    font-size: 2.2rem;
+    font-weight: 400;
+    margin-bottom: 15px;
+}
+
+.post-excerpt {
+    font-size: 1.2rem;
+    color: #6c757d;
+    margin-bottom: 20px;
+}
+
+.post-meta {
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+}
+
+.meta-item {
+    color: #6c757d;
+    margin-right: 20px;
+    font-size: 0.9rem;
+}
+
+.blog-post-content {
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.content-title {
+    color: #495057;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #6f42c1;
+}
+
+.blog-post-footer {
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 1px solid #dee2e6;
+}
+
+.post-tags, .post-share {
+    margin-bottom: 20px;
+}
+
+.post-tags h6, .post-share h6 {
+    color: #495057;
+    margin-bottom: 10px;
+}
+
+.blog-sidebar {
+    padding-left: 30px;
+}
+
+.sidebar-widget {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+}
+
+.widget-title {
+    color: #495057;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #6f42c1;
+}
+
+.author-bio {
+    text-align: center;
+}
+
+.author-avatar {
+    font-size: 4rem;
+    color: #6c757d;
+    margin-bottom: 15px;
+}
+
+.author-social a {
+    font-size: 1.2rem;
+    margin: 0 5px;
+}
+
+.recent-post {
+    padding: 15px 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.recent-post:last-child {
+    border-bottom: none;
+}
+
+.recent-post h6 a {
+    color: #495057;
+    text-decoration: none;
+    font-size: 0.95rem;
+}
+
+.recent-post h6 a:hover {
+    color: #6f42c1;
+}
+
+.categories {
+    display: flex;
+    flex-direction: column;
+}
+
+.category-link {
+    color: #495057;
+    text-decoration: none;
+    padding: 10px 0;
+    border-bottom: 1px solid #e9ecef;
+    display: flex;
+    justify-content: space-between;
+}
+
+.category-link:hover {
+    color: #6f42c1;
+}
+
+.category-link:last-child {
+    border-bottom: none;
+}
+
+.post-count {
+    color: #6c757d;
+    font-size: 0.8rem;
+}
+
+.newsletter-form {
+    margin-top: 15px;
+}
+
+.blog-footer {
+    background: #343a40;
+    color: white;
+    margin-top: 60px;
+}
+
+.blog-footer a {
+    color: #adb5bd;
+}
+
+.blog-footer a:hover {
+    color: white;
+}
+
+/* Content block styling for blog */
+.content-block-text p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #495057;
+    margin-bottom: 20px;
+}
+
+.content-block-list ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.content-block-list li {
+    padding: 8px 0;
+    padding-left: 25px;
+    position: relative;
+}
+
+.content-block-list li:before {
+    content: '▶';
+    color: #6f42c1;
+    position: absolute;
+    left: 0;
+    top: 8px;
+}
+
+.content-block-quote blockquote {
+    background: #f8f9fa;
+    border-left: 4px solid #6f42c1;
+    padding: 20px 30px;
+    margin: 30px 0;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: #495057;
+}
+
+.content-block-html article {
+    margin-bottom: 40px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.content-block-html article h2 {
+    color: #495057;
+    margin-bottom: 10px;
+}
+
+.content-block-html .meta {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+}
+
+.content-block-html .read-more {
+    color: #6f42c1;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.content-block-html .read-more:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 991px) {
+    .blog-sidebar {
+        padding-left: 0;
+        margin-top: 40px;
+    }
+}
+</style>
+{% endblock %}
