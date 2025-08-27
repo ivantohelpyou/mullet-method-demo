@@ -125,6 +125,22 @@ class DevelopmentConfig(Config):
             pass
 
 
+class ScriptConfig(DevelopmentConfig):
+    """Configuration for command-line scripts - same as development but quieter."""
+
+    SQLALCHEMY_ECHO = False  # Disable SQL query logging for scripts
+
+    @staticmethod
+    def init_app(app):
+        """Initialize script-specific settings."""
+        Config.init_app(app)
+
+        # Set up quieter logging for scripts
+        import logging
+        logging.basicConfig(level=logging.WARNING)
+        app.logger.setLevel(logging.WARNING)
+
+
 class TestingConfig(Config):
     """Testing environment configuration."""
     
@@ -186,6 +202,7 @@ class ProductionConfig(Config):
 # Configuration dictionary
 config = {
     'development': DevelopmentConfig,
+    'script': ScriptConfig,
     'testing': TestingConfig,
     'production': ProductionConfig,
     'default': DevelopmentConfig
@@ -195,17 +212,27 @@ config = {
 def get_config(config_name=None):
     """
     Get configuration class based on environment.
-    
+
     Args:
         config_name (str): Configuration name ('development', 'testing', 'production')
-    
+
     Returns:
         Config: Configuration class
     """
     if config_name is None:
         config_name = os.environ.get('FLASK_ENV', 'development')
-    
+
     return config.get(config_name, DevelopmentConfig)
+
+
+def get_script_config():
+    """
+    Get configuration for command-line scripts.
+
+    Returns:
+        Config: ScriptConfig class (quiet logging, same database as development)
+    """
+    return ScriptConfig
 
 
 # Database configuration helpers

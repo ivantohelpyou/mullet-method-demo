@@ -1,14 +1,19 @@
-#!/usr/bin/env python3
+#!/home/ivanadamin/mullet-method-demo-standalone/.venv/bin/python
 """
 Show all sites in the database - demonstrates database-driven routing
 """
 
 import sys
 import os
+import logging
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+# Disable SQLAlchemy logging for cleaner output
+logging.getLogger('sqlalchemy.engine').setLevel(logging.WARNING)
 
 from app import create_app
 from models import Site, Page
+from config import get_script_config
 
 def show_sites():
     """Display all sites and their pages from the database."""
@@ -40,7 +45,7 @@ def show_sites():
 
 def main():
     """Main function."""
-    app = create_app()
+    app = create_app(get_script_config())
     
     with app.app_context():
         show_sites()

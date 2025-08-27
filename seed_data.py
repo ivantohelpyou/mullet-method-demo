@@ -1,3 +1,4 @@
+#!/home/ivanadamin/mullet-method-demo-standalone/.venv/bin/python
 """
 Seed Data Script for Mullet Method Demo
 
@@ -19,7 +20,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 from app import create_app
 from models import db, Site, Page, ContentBlock, NavigationItem
-from config import DevelopmentConfig
+from config import get_script_config
 
 
 def create_sample_data():
@@ -427,7 +428,7 @@ def create_portfolio_pages(site):
 
 if __name__ == '__main__':
     # Create Flask app and database
-    app = create_app(DevelopmentConfig)
+    app = create_app(get_script_config())
     
     with app.app_context():
         # Drop and recreate all tables

@@ -1,0 +1,254 @@
+/* Corporate Theme CSS */
+
+/* Corporate theme variables */
+:root {
+    --corporate-primary: #007bff;
+    --corporate-secondary: #6c757d;
+    --corporate-success: #28a745;
+    --corporate-info: #17a2b8;
+    --corporate-warning: #ffc107;
+    --corporate-danger: #dc3545;
+    --corporate-light: #f8f9fa;
+    --corporate-dark: #343a40;
+    --corporate-gradient: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+}
+
+/* Corporate theme body styling */
+.corporate-theme {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+}
+
+/* Corporate header styling */
+.corporate-header .navbar {
+    background: var(--corporate-gradient) !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 1rem 0;
+}
+
+.corporate-header .navbar-brand {
+    font-weight: 700;
+    font-size: 1.8rem;
+    color: white !important;
+}
+
+.corporate-header .navbar-nav .nav-link {
+    color: rgba(255,255,255,0.9) !important;
+    font-weight: 500;
+    margin: 0 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.corporate-header .navbar-nav .nav-link:hover {
+    color: white !important;
+    background-color: rgba(255,255,255,0.1);
+    border-radius: 5px;
+}
+
+/* Corporate hero section */
+.corporate-hero {
+    background: var(--corporate-gradient);
+    padding: 100px 0;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.corporate-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+    opacity: 0.3;
+}
+
+.corporate-hero .container {
+    position: relative;
+    z-index: 2;
+}
+
+.corporate-hero h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.corporate-hero .lead {
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+    opacity: 0.95;
+}
+
+/* Corporate content blocks */
+.corporate-theme .content-block {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.corporate-theme .content-block:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+}
+
+.corporate-theme .content-block-header {
+    background: var(--corporate-gradient);
+    color: white;
+    padding: 1.5rem;
+    border-bottom: none;
+}
+
+.corporate-theme .content-block-header h2,
+.corporate-theme .content-block-header h3,
+.corporate-theme .content-block-header h4 {
+    margin: 0;
+    color: white;
+}
+
+.corporate-theme .content-block-body {
+    padding: 2rem;
+}
+
+/* Corporate buttons */
+.corporate-theme .btn-primary {
+    background: var(--corporate-gradient);
+    border: none;
+    font-weight: 600;
+    padding: 12px 30px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.corporate-theme .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,123,255,0.3);
+}
+
+.corporate-theme .btn-outline-primary {
+    border-color: var(--corporate-primary);
+    color: var(--corporate-primary);
+    font-weight: 600;
+}
+
+.corporate-theme .btn-outline-primary:hover {
+    background: var(--corporate-gradient);
+    border-color: var(--corporate-primary);
+}
+
+/* Corporate cards */
+.corporate-theme .card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.corporate-theme .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.corporate-theme .card-header {
+    background: var(--corporate-light);
+    border-bottom: 2px solid var(--corporate-primary);
+    font-weight: 600;
+}
+
+/* Corporate footer */
+.corporate-theme .site-footer {
+    background: var(--corporate-dark);
+    color: white;
+    padding: 3rem 0 1rem;
+    margin-top: 4rem;
+}
+
+.corporate-theme .site-footer h5 {
+    color: var(--corporate-primary);
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.corporate-theme .site-footer a {
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.corporate-theme .site-footer a:hover {
+    color: var(--corporate-primary);
+}
+
+/* Corporate navigation styling */
+.corporate-theme .nav-pills .nav-link {
+    border-radius: 8px;
+    font-weight: 500;
+    margin-right: 0.5rem;
+}
+
+.corporate-theme .nav-pills .nav-link.active {
+    background: var(--corporate-gradient);
+}
+
+/* Corporate form styling */
+.corporate-theme .form-control {
+    border-radius: 8px;
+    border: 2px solid #e9ecef;
+    padding: 12px 15px;
+    transition: all 0.3s ease;
+}
+
+.corporate-theme .form-control:focus {
+    border-color: var(--corporate-primary);
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
+}
+
+/* Corporate responsive adjustments */
+@media (max-width: 768px) {
+    .corporate-hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .corporate-hero .lead {
+        font-size: 1.1rem;
+    }
+    
+    .corporate-theme .content-block-body {
+        padding: 1.5rem;
+    }
+}
+
+/* Corporate animations */
+@keyframes corporateFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.corporate-theme .fade-in-corporate {
+    animation: corporateFadeIn 0.6s ease;
+}
+
+/* Corporate specific utilities */
+.corporate-theme .text-corporate-primary {
+    color: var(--corporate-primary) !important;
+}
+
+.corporate-theme .bg-corporate-primary {
+    background: var(--corporate-gradient) !important;
+}
+
+.corporate-theme .border-corporate-primary {
+    border-color: var(--corporate-primary) !important;
+}

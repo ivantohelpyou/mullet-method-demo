@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/home/ivanadamin/mullet-method-demo-standalone/.venv/bin/python
 """
 Add New Restaurant Site Dynamically
 
@@ -16,6 +16,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from app import create_app
 from models import db, Site, Page, ContentBlock, NavigationItem
+from config import get_script_config
 
 def create_path_prefix(name):
     """Convert restaurant name to a URL-safe path prefix."""
@@ -53,7 +54,7 @@ def add_restaurant_site(name, description):
         path_prefix=path_prefix,
         name=name,
         description=description,
-        template_theme='corporate',  # Reuse existing template
+        template_theme='restaurant',  # Use restaurant-specific template
         config={
             'colors': {
                 'primary': '#d4691a',      # Warm orange
@@ -212,7 +213,7 @@ def main():
         print("❌ Description cannot be empty!")
         sys.exit(1)
     
-    app = create_app()
+    app = create_app(get_script_config())
     
     with app.app_context():
         success = add_restaurant_site(name, description)

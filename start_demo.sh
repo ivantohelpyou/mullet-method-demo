@@ -12,7 +12,7 @@ if [ ! -d ".venv" ]; then
 fi
 
 # Check if database exists
-if [ ! -f "demo.db" ]; then
+if [ ! -f "mullet_demo.db" ]; then
     echo "📁 Database not found. Creating fresh database..."
     .venv/bin/python seed_data.py
 fi

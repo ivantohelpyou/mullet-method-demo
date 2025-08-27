@@ -1,0 +1,9 @@
+{% extends "themes/corporate/layout.html" %}
+
+{# Corporate theme page template - inherits from corporate layout #}
+
+{% block title %}{{ page.title }} - {{ site.name }}{% endblock %}
+
+{% block description %}{{ page.description or site.description }}{% endblock %}
+
+{# Page content is handled by the layout template #}

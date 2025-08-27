@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/home/ivanadamin/mullet-method-demo-standalone/.venv/bin/python
 """
 Live Demo: Add New Site Dynamically
 
@@ -12,6 +12,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from app import create_app
 from models import db, Site, Page, ContentBlock, NavigationItem
+from config import get_script_config
 
 def add_restaurant_site():
     """Add a new restaurant site using existing templates."""
@@ -24,7 +25,7 @@ def add_restaurant_site():
         path_prefix='restaurant',
         name='Bella Vista Restaurant',
         description='Authentic Italian cuisine in the heart of the city',
-        template_theme='corporate',  # Reuse existing template
+        template_theme='restaurant',  # Use restaurant-specific template
         config={
             'colors': {
                 'primary': '#d4691a',      # Warm orange
@@ -166,7 +167,7 @@ def add_restaurant_site():
 
 def main():
     """Main function to add the new site."""
-    app = create_app()
+    app = create_app(get_script_config())
     
     with app.app_context():
         # Check if restaurant site already exists

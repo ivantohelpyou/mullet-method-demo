@@ -13,14 +13,15 @@ Key Features:
 
 import os
 import logging
-from flask import Flask, request, render_template, abort, jsonify, redirect, url_for
+from flask import Flask, request, render_template, abort, jsonify, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from sqlalchemy.exc import SQLAlchemyError
 
 # Import our models and configuration
 from models import db, Site, Page, ContentBlock, NavigationItem
-from config import Config
+from config import Config, get_config
+from datetime import datetime
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -69,7 +70,42 @@ def register_routes(app):
             'template_theme': site.template_theme,
             'url': f"/{site.path_prefix}"
         } for site in sites])
-    
+
+    @app.route('/contact/submit', methods=['POST'])
+    def contact_submit():
+        """Handle contact form submissions from any site."""
+        try:
+            # Get form data
+            name = request.form.get('name', '').strip()
+            email = request.form.get('email', '').strip()
+            subject = request.form.get('subject', '').strip()
+            message = request.form.get('message', '').strip()
+
+            # Get the referring site for proper redirect
+            referer = request.headers.get('Referer', '/')
+
+            # Basic validation
+            if not name or not email or not message:
+                flash('Please fill in all required fields.', 'error')
+                return redirect(referer)
+
+            # Log the contact form submission (in a real app, you'd save to database or send email)
+            app.logger.info(f"📧 Contact form submission:")
+            app.logger.info(f"   Name: {name}")
+            app.logger.info(f"   Email: {email}")
+            app.logger.info(f"   Subject: {subject}")
+            app.logger.info(f"   Message: {message[:100]}...")
+            app.logger.info(f"   Timestamp: {datetime.now()}")
+
+            # Show success message
+            flash('Thank you for your message! We\'ll get back to you soon.', 'success')
+            return redirect(referer)
+
+        except Exception as e:
+            app.logger.error(f"Contact form error: {e}")
+            flash('Sorry, there was an error sending your message. Please try again.', 'error')
+            return redirect(request.headers.get('Referer', '/'))
+
     @app.route('/<path:url_path>')
     def dynamic_route(url_path):
         """
@@ -320,7 +356,7 @@ def register_theme_customizer(theme_name, customizer_class):
 
 
 # Create the Flask application
-app = create_app()
+app = create_app(get_config())
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
